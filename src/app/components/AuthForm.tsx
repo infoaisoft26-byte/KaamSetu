@@ -36,7 +36,10 @@ export default function AuthForm({ portal }: Props) {
         const result = await authClient.signIn.email({ email, password });
         if (result.error) throw new Error(result.error.message || "Sign-in failed.");
       }
-      router.replace(portal === "customer" ? "/customer" : "/provider/dashboard");
+      const destination = await fetch("/api/profile/destination", { cache: "no-store" });
+      const destinationData = await destination.json();
+      if (!destination.ok || !destinationData.path) throw new Error(destinationData.error || "This account is not enabled for this workspace yet.");
+      router.replace(destinationData.path);
       router.refresh();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
