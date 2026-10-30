@@ -3,5 +3,5 @@ import { auth } from "@/lib/auth/server";
 export default auth.middleware({ loginUrl: "/login" });
 
 export const config = {
-  matcher: ["/admin/:path*", "/customer/:path*", "/provider/dashboard/:path*"],
+  matcher: ["/admin/:path*", "/customer/:path*", "/provider/dashboard/:path*", "/provider/register/:path*"],
 };
